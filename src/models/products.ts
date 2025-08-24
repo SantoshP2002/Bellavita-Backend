@@ -1,0 +1,6 @@
+
+
+
+interface IProduct{
+    title: string
+}

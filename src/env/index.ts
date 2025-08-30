@@ -1,1 +1,2 @@
-export const { PORT} = process.env
+export const { PORT, FRONTEND_DEVELOPMENT_URL, FRONTEND_PRODUCTION_URL } =
+  process.env;

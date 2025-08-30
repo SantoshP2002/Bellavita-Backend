@@ -22,7 +22,8 @@ app.get("/", (_: Request, res: Response) => {
   });
 })
 // Error Handling Routes
-app.use(ResponseMiddleware.notFound)
+app.use(ResponseMiddleware.notFound);
+app.use(ResponseMiddleware.error)
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

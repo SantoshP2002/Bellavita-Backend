@@ -1,4 +1,4 @@
-import "dotenv/config"
+import "dotenv/config";
 import express, { Request, Response } from "express";
 import QueryString from "qs";
 
@@ -13,6 +13,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.set("query parser", (str: string) => QueryString.parse(str));
 
+// Custom Middlewares
+app.use(ResponseMiddleware.success)
 app.use(CorsMiddleware.checkOrigin);
 
 app.get("/", (_: Request, res: Response) => {
@@ -20,10 +22,10 @@ app.get("/", (_: Request, res: Response) => {
     success: true,
     message: "Welcome to Bellavita API",
   });
-})
+});
 // Error Handling Routes
 app.use(ResponseMiddleware.notFound);
-app.use(ResponseMiddleware.error)
+app.use(ResponseMiddleware.error);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

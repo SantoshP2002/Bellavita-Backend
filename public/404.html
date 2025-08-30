@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>404 - Page Not Found</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+      body {
+        background: radial-gradient(
+          circle at center,
+          #f3f4f6,
+          #9a9a9a,
+          #545454
+        );
+      }
+
+      .galaxy-text {
+        background: url("/images/Oops.avif") no-repeat center center;
+        background-size: cover;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        color: transparent;
+      }
+    </style>
+  </head>
+  <body class="min-h-dvh flex items-center justify-center">
+    <div class="text-center px-6">
+      <h1 class="text-8xl font-extrabold galaxy-text">Oops!</h1>
+      <h2 class="text-2xl font-semibold text-red-600 mt-4">
+        404 - PAGE NOT FOUND
+      </h2>
+      <p class="text-gray-600 mt-2 max-w-md mx-auto">
+        The page you are looking for might have been removed,<br />
+        had its name changed or is temporarily unavailable.
+      </p>
+      <a
+        href="/"
+        class="mt-6 inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-full transition"
+      >
+        GO TO HOMEPAGE
+      </a>
+    </div>
+  </body>
+</html>

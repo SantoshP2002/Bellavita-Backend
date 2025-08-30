@@ -5,7 +5,7 @@ import bcrypt from "bcrypt";
 
 const registerSchema = z.object({
   name: z.string().min(3, "Username must be at least 3 characters long"),
-   email: z.string().email("Invalid email address"),
+  email: z.string().email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 characters long"),
 });
 
@@ -42,9 +42,12 @@ const registerController = async (req: Request, res: Response) => {
       name,
       email,
       password: hashPassword,
+      role: "CUSTOMER",
     });
     await newUser.save();
-    return res.status(201).json({ message: "User registered successfully", user: newUser });
+    return res
+      .status(201)
+      .json({ message: "User registered successfully", user: newUser });
   } catch (error) {
     console.error("Registration error:", error);
     return res.status(500).json({ message: "Internal server error" });

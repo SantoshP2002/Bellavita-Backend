@@ -1,0 +1,6 @@
+import { FRONTEND_DEVELOPMENT_URL, FRONTEND_PRODUCTION_URL } from "../env";
+
+export const allowedOrigins = [
+  FRONTEND_DEVELOPMENT_URL,
+  FRONTEND_PRODUCTION_URL,
+];

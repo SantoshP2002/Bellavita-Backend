@@ -3,8 +3,13 @@ import express, { Request, Response } from "express";
 import QueryString from "qs";
 
 import { NODE_ENV, PORT } from "./env";
-import { CorsMiddleware, DatabaseMiddleware, ResponseMiddleware } from "./middlewares";
+import {
+  CorsMiddleware,
+  DatabaseMiddleware,
+  ResponseMiddleware,
+} from "./middlewares";
 import { connectDB } from "./configs";
+import { router } from "./routes";
 
 const app = express();
 
@@ -15,16 +20,17 @@ app.use(express.urlencoded({ extended: true }));
 app.set("query parser", (str: string) => QueryString.parse(str));
 
 // Custom Middlewares
-app.use(ResponseMiddleware.success)
+app.use(ResponseMiddleware.success);
 app.use(CorsMiddleware.checkOrigin);
 app.use(DatabaseMiddleware.checkConnection);
 
 app.get("/", (_: Request, res: Response) => {
-  res.status(200).json({
-    success: true,
-    message: "Welcome to Bellavita API",
-  });
+  res.success(200, "Welcome to Bellavita API");
 });
+
+// All API Routes
+app.use("/api", router);
+
 // Error Handling Routes
 app.use(ResponseMiddleware.notFound);
 app.use(ResponseMiddleware.error);

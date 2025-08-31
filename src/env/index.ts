@@ -3,4 +3,5 @@ export const {
   FRONTEND_DEVELOPMENT_URL,
   FRONTEND_PRODUCTION_URL,
   NODE_ENV,
+  MONGODB_URI,
 } = process.env;

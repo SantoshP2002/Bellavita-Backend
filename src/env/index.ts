@@ -4,4 +4,5 @@ export const {
   FRONTEND_PRODUCTION_URL,
   NODE_ENV,
   MONGODB_URI,
+  JWT_SECRET,
 } = process.env;

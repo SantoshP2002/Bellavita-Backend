@@ -3,8 +3,8 @@ import bcrypt from "bcrypt";
 import { User } from "../../user/models";
 import { generateToken } from "../services";
 
-export const loginController = async (_req: Request, res: Response) => {
-  const { email, password } = _req.body ?? {};
+export const loginController = async (req: Request, res: Response) => {
+  const { email, password } = req.body ?? {};
 
   const userDetails = await User.findOne({ email });
   if (!userDetails) {

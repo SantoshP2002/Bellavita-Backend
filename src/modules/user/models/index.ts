@@ -29,6 +29,7 @@ const userSchema = new Schema<IUser>(
       enum: ["ADMIN", "USER"],
       default: "USER",
     },
+    profilePic: { type: String, default: "" },
   },
   { timestamps: true, versionKey: false }
 );

@@ -13,7 +13,11 @@ export const registerController = async (req: Request, res: Response) => {
   }
 
   // Hash password
-  const hashPassword = await bcrypt.hash(password, 10);
+  const hashPassword = bcrypt.hashSync(password, 10);
+
+  if (!hashPassword) {
+    throw new AppError("Failed to hash password", 500);
+  }
 
   // Create new user
   const user = await User.create({
@@ -21,14 +25,14 @@ export const registerController = async (req: Request, res: Response) => {
     lastName,
     email,
     password: hashPassword,
-    profilePic,
+    profilePic: profilePic ?? "",
   });
   await user.save();
 
   // Token
   const token = generateToken(user._id);
   res.success(201, "User Registered Successfully", {
-    user,
     token,
+    user,
   });
 };

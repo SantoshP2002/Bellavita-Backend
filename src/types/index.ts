@@ -95,3 +95,13 @@ export interface ValidateZodFieldConfigs
   extends ZodStringConfigs,
     ZodNumberConfigs,
     ZodDateConfigs {}
+
+export interface SingleFileUploaderProps {
+  file: Express.Multer.File;
+  folder?: string;
+}
+
+export interface MultipleFileUploaderProps {
+  files: Express.Multer.File[];
+  folder?: string;
+}

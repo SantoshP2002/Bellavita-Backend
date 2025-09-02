@@ -3,9 +3,10 @@ import { AppError } from "../../../classes";
 import { User } from "../../user/models";
 import bcrypt from "bcrypt";
 import { generateToken } from "../services";
+import { singleImageUploader } from "../../../utils";
 
 export const registerController = async (req: Request, res: Response) => {
-  const { firstName, lastName, email, password, profilePic } = req.body ?? {};
+  const { firstName, lastName, email, password } = req.body ?? {};
 
   const userDetails = await User.findOne({ email });
   if (userDetails) {
@@ -17,6 +18,16 @@ export const registerController = async (req: Request, res: Response) => {
 
   if (!hashPassword) {
     throw new AppError("Failed to hash password", 500);
+  }
+
+  const file = req.file;
+
+  let profilePic = "";
+
+  if (file) {
+    const cldResp = await singleImageUploader({ file, folder: "Profile_Pic" });
+
+    profilePic = cldResp?.secure_url;
   }
 
   // Create new user

@@ -40,6 +40,10 @@ export const registerController = async (req: Request, res: Response) => {
   });
   await user.save();
 
+  if (!user) {
+    throw new AppError("Failed to register user", 500);
+  }
+
   // Token
   const token = generateToken(user._id);
   res.success(201, "User Registered Successfully", {

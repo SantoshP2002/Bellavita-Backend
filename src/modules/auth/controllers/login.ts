@@ -1,23 +1,20 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
-import { User } from "../../user/models";
+import { UserModule } from "../..";
 import { generateToken } from "../services";
 
 export const loginController = async (req: Request, res: Response) => {
   const { email, password } = req.body ?? {};
 
-  const userDetails = await User.findOne({ email });
-  if (!userDetails) {
-    throw new Error("User not found");
-  }
+  const user = await UserModule.Services.getUserByEmail(email);
 
   // MatchPassword
-  const matchPassword = await bcrypt.compare(password, userDetails.password);
+  const matchPassword = await bcrypt.compare(password, user.password);
   if (!matchPassword) {
     throw new Error("Invalid credentials");
   }
 
   // Token
-  const token = generateToken(userDetails._id.toString());
-  res.success(200, "User Logged In Successfully", { user: userDetails, token });
+  const token = generateToken(user._id?.toString());
+  res.success(200, "User Logged In Successfully", { user, token });
 };

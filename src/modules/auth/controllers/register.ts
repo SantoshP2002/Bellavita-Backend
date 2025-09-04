@@ -1,15 +1,16 @@
 import { Request, Response } from "express";
-import { AppError } from "../../../classes";
-import { User } from "../../user/models";
 import bcrypt from "bcrypt";
+
+import { UserModule } from "../..";
+import { AppError } from "../../../classes";
 import { generateToken } from "../services";
 import { singleImageUploader } from "../../../utils";
 
 export const registerController = async (req: Request, res: Response) => {
   const { firstName, lastName, email, password } = req.body ?? {};
 
-  const userDetails = await User.findOne({ email });
-  if (userDetails) {
+  const existUser = await UserModule.Services.getUserByEmail(email, false);
+  if (existUser) {
     throw new AppError("User already registered", 400);
   }
 
@@ -31,7 +32,7 @@ export const registerController = async (req: Request, res: Response) => {
   }
 
   // Create new user
-  const user = await User.create({
+  const user = await UserModule.Models.User.create({
     firstName,
     lastName,
     email,

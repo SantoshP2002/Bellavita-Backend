@@ -1,4 +1,6 @@
 import { UploadApiResponse } from "cloudinary";
+import { Types } from "mongoose";
+
 import { AppError } from "../classes";
 import { cloudinaryConnection, myCloudinary } from "../configs/cloudinary";
 import { CLOUDINARY_MAIN_FOLDER } from "../env";
@@ -111,7 +113,6 @@ export const multipleImagesRemover = async (imageUrls: string[]) => {
 
 const mainFolder = CLOUDINARY_MAIN_FOLDER;
 
-
 // ========== COMMON IMAGE UPLOADER FUNCTION ==========
 const uploadToCloudinary = async (
   file: Express.Multer.File,
@@ -211,4 +212,16 @@ export const multipleImagesUploader = async ({
       500
     );
   }
+};
+
+export const isValidMongoId = (
+  id: string,
+  message: string,
+  statusCode?: number
+): boolean => {
+  const isValid = Types.ObjectId.isValid(id);
+
+  if (!isValid) throw new AppError(message, statusCode || 400);
+
+  return true;
 };

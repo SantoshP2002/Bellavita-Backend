@@ -1,16 +1,7 @@
 import { Request, Response } from "express";
-import { AuthModule } from "../..";
-import { User } from "../models";
-import { AppError } from "../../../classes";
+import { getUserByToken } from "../services";
 
 export const getUserController = async (req: Request, res: Response) => {
-  const userId = AuthModule.Services.getUserIdFromToken(req);
-
-  const user = await User.findById(userId).select("-password").lean().exec();
-
-  if (!user) {
-    throw new AppError("User not found", 404);
-  }
-
+  const user = await getUserByToken(req);
   res.success(200, "User found successfully", { user });
 };

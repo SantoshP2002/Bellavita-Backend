@@ -1,8 +1,9 @@
 import { Request } from "express";
-import { AuthModule, UserModule } from "../..";
+import { AuthModule } from "../..";
 import { User } from "../models";
 import { AppError } from "../../../classes";
 import { Types } from "mongoose";
+import { IUser } from "../types";
 
 export const getUserByToken = async (req: Request, needPassword?: boolean) => {
   const userId = AuthModule.Services.getUserIdFromToken(req);
@@ -26,7 +27,7 @@ export const getUserById = async (
   userId: string | Types.ObjectId,
   needPassword?: boolean
 ) => {
-  let user;
+  let user = null;
 
   if (needPassword) {
     user = await User.findById(userId);
@@ -48,5 +49,5 @@ export const getUserByEmail = async (email: string, needError?: boolean) => {
     throw new AppError(`User not found with ${email}`, 404);
   }
 
-  return user as UserModule.ITypes.IUser;
+  return user as IUser;
 };

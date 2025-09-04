@@ -1,4 +1,7 @@
 import { Request } from "express";
+import multer from "multer";
+
+import { UserModule } from "../modules";
 
 // Interface for authenticated requests with user
 export interface AuthenticatedRequest extends Request {
@@ -9,9 +12,6 @@ export interface AuthenticatedRequest extends Request {
 export interface AuthorizedRequest extends Request {
   user?: Omit<UserModule.ITypes.IUser, "password">; // User object without password
 }
-
-import multer from "multer";
-import { UserModule } from "../modules";
 
 export type MulterType = "single" | "array" | "any" | "fields" | "none";
 

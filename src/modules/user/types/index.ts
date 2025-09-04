@@ -1,3 +1,5 @@
+export type TUserRole = "ADMIN" | "USER";
+
 export interface IUser {
   _id: string;
   email: string;
@@ -5,7 +7,7 @@ export interface IUser {
   lastName: string;
   password: string;
   profilePic: string;
-  role: "ADMIN" | "USER";
+  role: TUserRole;
   createdAt: Date;
   updatedAt: Date;
 }

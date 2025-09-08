@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { AuthModule, UserModule } from "../modules";
+import { AuthModule, ProductModule, UserModule } from "../modules";
 
 export const router = Router();
 
@@ -9,3 +9,6 @@ router.use("/auth", AuthModule.Routes.router);
 
 // Users Routes
 router.use("/users", UserModule.Routes.router);
+
+// Products Routes
+router.use("/products", ProductModule.Routes.router);

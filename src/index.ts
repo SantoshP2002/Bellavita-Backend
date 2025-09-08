@@ -3,13 +3,13 @@ import express, { Request, Response } from "express";
 import QueryString from "qs";
 
 import { NODE_ENV, PORT } from "./env";
+import { router } from "./routes";
+import { connectDB } from "./configs";
 import {
   CorsMiddleware,
   DatabaseMiddleware,
   ResponseMiddleware,
 } from "./middlewares";
-import { connectDB } from "./configs";
-import { router } from "./routes";
 
 const app = express();
 

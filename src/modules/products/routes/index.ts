@@ -2,6 +2,7 @@ import { Router } from "express";
 import { ResponseMiddleware } from "../../../middlewares";
 import {
   createProductsController,
+  deleteProductByIdController,
   getAllProductsController,
   getProductByIdController,
   updateProductController,
@@ -24,4 +25,8 @@ router.get(
 router.put(
   "/update-product/:id",
   ResponseMiddleware.catchAsync(updateProductController)
+);
+router.delete(
+  "/delete-product/:id",
+  ResponseMiddleware.catchAsync(deleteProductByIdController)
 );

@@ -1,7 +1,14 @@
 import { Router } from "express";
 import { ResponseMiddleware } from "../../../middlewares";
-import { getProductsController } from "../controller";
+import { createProductsController, getAllProductsController, } from "../controller";
 
-export const router = Router()
+export const router = Router();
 
-router.get("/get-products", ResponseMiddleware.catchAsync(getProductsController))
+router.get(
+  "/get-products",
+  ResponseMiddleware.catchAsync(getAllProductsController)
+);
+router.post(
+  "/create-products",
+  ResponseMiddleware.catchAsync(createProductsController)
+);

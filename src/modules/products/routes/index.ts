@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { ResponseMiddleware } from "../../../middlewares";
+import { MulterMiddleware, ResponseMiddleware } from "../../../middlewares";
 import {
   createProductsController,
   deleteProductByIdController,
@@ -15,7 +15,11 @@ router.get(
   ResponseMiddleware.catchAsync(getAllProductsController)
 );
 router.post(
-  "/create-products",
+  "/create-product",
+  MulterMiddleware.validateFiles({
+    type: "fields",
+    fieldsConfig: [{ name: "productImages",maxCount:8 }],
+  }),
   ResponseMiddleware.catchAsync(createProductsController)
 );
 router.get(

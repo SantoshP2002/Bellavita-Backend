@@ -10,6 +10,8 @@ export const getUserIdFromToken = (req: Request) => {
   try {
     const token = req.get("Authorization");
 
+    console.log("TOKEN:", token);
+
     if (!token) {
       throw new AppError("Token not found, please login", 401);
     }

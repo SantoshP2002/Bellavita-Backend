@@ -1,5 +1,9 @@
 import { Router } from "express";
-import { MulterMiddleware, ResponseMiddleware } from "../../../middlewares";
+import {
+  AuthMiddleware,
+  MulterMiddleware,
+  ResponseMiddleware,
+} from "../../../middlewares";
 import {
   createProductsController,
   deleteProductByIdController,
@@ -7,30 +11,42 @@ import {
   getProductByIdController,
   updateProductController,
 } from "../controller";
+import { validate } from "../../../middlewares/product/validate";
+import { createProductZodSchema, updateProductZodSchema } from "../validation";
+import { validateFiles } from "../../../middlewares/multer";
 
 export const router = Router();
 
-router.get(
-  "/get-products",
-  ResponseMiddleware.catchAsync(getAllProductsController)
-);
+// Get all products
+router.get("/", ResponseMiddleware.catchAsync(getAllProductsController));
+
+// Create product
 router.post(
-  "/create-product",
+  "/create",
+  AuthMiddleware.authorized(["ADMIN"]),
+  validate(createProductZodSchema),
   MulterMiddleware.validateFiles({
     type: "fields",
-    fieldsConfig: [{ name: "productImages",maxCount:8 }],
+    fieldsConfig: [{ name: "productImages", maxCount: 8 }],
   }),
   ResponseMiddleware.catchAsync(createProductsController)
 );
-router.get(
-  "/get-product/:id",
-  ResponseMiddleware.catchAsync(getProductByIdController)
-);
-router.put(
-  "/update-product/:id",
+// Get By Id
+router.get("/:id", ResponseMiddleware.catchAsync(getProductByIdController));
+
+// Update product
+router.patch(
+  "/:id",
+  validateFiles({
+    type: "fields",
+    fieldsConfig: [{ name: "productImages", maxCount: 8 }],
+  }),
+  validate(updateProductZodSchema),
   ResponseMiddleware.catchAsync(updateProductController)
 );
+
+// Delete product
 router.delete(
-  "/delete-product/:id",
+  "/:id",
   ResponseMiddleware.catchAsync(deleteProductByIdController)
 );

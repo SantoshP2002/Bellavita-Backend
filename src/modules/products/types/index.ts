@@ -5,8 +5,12 @@ export interface IProduct {
   description: string;
   price: number;
   sellingPrice: number;
-  productImages: string[];
   category: string;
+  productImages: string[];
   createdAt: Date;
   updatedAt: Date;
+  discount?: number;
+  rating?: number;
+  reviews?: number;
+  isBestseller?: boolean;
 }

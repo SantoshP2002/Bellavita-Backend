@@ -11,9 +11,6 @@ import {
   getProductByIdController,
   updateProductController,
 } from "../controller";
-import { validate } from "../../../middlewares/product/validate";
-import { createProductZodSchema, updateProductZodSchema } from "../validation";
-import { validateFiles } from "../../../middlewares/multer";
 
 export const router = Router();
 
@@ -24,7 +21,6 @@ router.get("/", ResponseMiddleware.catchAsync(getAllProductsController));
 router.post(
   "/create",
   AuthMiddleware.authorized(["ADMIN"]),
-  validate(createProductZodSchema),
   MulterMiddleware.validateFiles({
     type: "fields",
     fieldsConfig: [{ name: "productImages", maxCount: 8 }],
@@ -37,11 +33,10 @@ router.get("/:id", ResponseMiddleware.catchAsync(getProductByIdController));
 // Update product
 router.patch(
   "/:id",
-  validateFiles({
+  MulterMiddleware.validateFiles({
     type: "fields",
     fieldsConfig: [{ name: "productImages", maxCount: 8 }],
   }),
-  validate(updateProductZodSchema),
   ResponseMiddleware.catchAsync(updateProductController)
 );
 

@@ -10,11 +10,11 @@ export const createProductZodSchema = z
       .string({ error: "Brand must be string" })
       .nonempty("Brand is required")
       .min(1, { message: "Brand must have minimum 2 characters long" }),
-    price: z
+    price: z.coerce
       .number({ error: "Price is required" })
       .nonnegative("Price must be a positive number")
       .min(1, { message: "Minimum price should be 1" }),
-    sellingPrice: z
+    sellingPrice: z.coerce
       .number({ error: "Selling price is required" })
       .nonnegative("Selling price must be a positive number")
       .min(1, { message: "Minimum Selling price should be 1" }),

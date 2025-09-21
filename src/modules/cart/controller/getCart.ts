@@ -3,9 +3,17 @@ import { AuthenticatedRequest } from "../../../types";
 import { Cart } from "../models";
 import { AppError } from "../../../classes";
 
-export const getCartController = async (req: AuthenticatedRequest, res: Response) => {
+export const getCartController = async (
+  req: AuthenticatedRequest,
+  res: Response
+) => {
   const userId = req.user?._id;
-  const cart = await Cart.findOne({userId}).lean();
+  const cart = await Cart.findOne({ userId }).populate({
+    path: "product", // Product Path
+    model: "Product", // Product Model
+    select:
+      "title brand price sellingPrice images", // Required Product Fields
+  });
 
   if (!cart) {
     throw new AppError("Cart not found", 404);

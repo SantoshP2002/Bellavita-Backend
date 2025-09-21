@@ -23,7 +23,7 @@ router.post(
   AuthMiddleware.authorized(["ADMIN"]),
   MulterMiddleware.validateFiles({
     type: "fields",
-    fieldsConfig: [{ name: "productImages", maxCount: 8 }],
+    fieldsConfig: [{ name: "images", maxCount: 8 }],
   }),
   ResponseMiddleware.catchAsync(createProductsController)
 );
@@ -35,7 +35,7 @@ router.patch(
   "/:id",
   MulterMiddleware.validateFiles({
     type: "fields",
-    fieldsConfig: [{ name: "productImages", maxCount: 8 }],
+    fieldsConfig: [{ name: "images", maxCount: 8 }],
   }),
   ResponseMiddleware.catchAsync(updateProductController)
 );

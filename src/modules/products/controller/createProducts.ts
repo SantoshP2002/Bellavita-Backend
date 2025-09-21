@@ -10,16 +10,16 @@ export const createProductsController = async (req: Request, res: Response) => {
     [fieldname: string]: Express.Multer.File[];
   };
 
-  let images: string[] = [];
-  const productImages = files?.productImages ?? [];
+  let imgUrls: string[] = [];
+  const images = files?.images ?? [];
 
-  if (productImages.length > 0) {
+  if (images.length > 0) {
     const cldResp = await multipleImagesUploader({
-      files: productImages,
+      files: images,
       folder: "Product_Images",
     });
 
-    images = cldResp.map((res) => res.secure_url) ?? [];
+    imgUrls = cldResp.map((res) => res.secure_url) ?? [];
   }
 
   const product = await Product.create({
@@ -29,7 +29,7 @@ export const createProductsController = async (req: Request, res: Response) => {
     price,
     sellingPrice,
     category,
-    productImages: images,
+    images: imgUrls,
   });
   if (!product) {
     throw new AppError("Failed to create product", 400);

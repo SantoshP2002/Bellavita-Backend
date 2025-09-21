@@ -9,8 +9,4 @@ export interface IProduct {
   productImages: string[];
   createdAt: Date;
   updatedAt: Date;
-  discount?: number;
-  rating?: number;
-  reviews?: number;
-  isBestseller?: boolean;
 }

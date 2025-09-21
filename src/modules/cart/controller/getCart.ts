@@ -8,11 +8,16 @@ export const getCartController = async (
   res: Response
 ) => {
   const userId = req.user?._id;
-  const cart = await Cart.findOne({ userId }).populate({
-    path: "product", // Product Path
-    model: "Product", // Product Model
-    select:
-      "title brand price sellingPrice images", // Required Product Fields
+  const cart = await Cart.findOne({ user: userId }).populate({
+    path: "products", // All Products in the cart
+    populate: [
+      {
+        path: "product", // Product Path
+        model: "Product", // Product Model
+        select: "title brand price sellingPrice images", // Required Product Fields
+        options: { select: { images: { $slice: 1 } } }, // It will give us Only One image in an Array
+      },
+    ],
   });
 
   if (!cart) {

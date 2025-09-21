@@ -6,7 +6,7 @@ export const router = Router();
 
 // Get cart
 router.get(
-  "/cart",
+  "/",
   AuthMiddleware.authenticated,
   ResponseMiddleware.catchAsync(getCartController)
 );

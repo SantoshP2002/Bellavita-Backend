@@ -6,8 +6,8 @@ export type TCartProduct = {
   price: number;
 };
 export interface ICart {
-  products: TCartProduct[];
-  totalPrice: number;
+  user: Types.ObjectId;
+  products: Array<Types.ObjectId>;
   createdAt: Date;
   updatedAt: Date;
 }

@@ -1,8 +1,7 @@
 import { Router } from "express";
-import { AuthModule, CartModule, ProductModule, UserModule } from "../modules";
+import { AuthModule, CartModule, CartProductModule, ProductModule, UserModule } from "../modules";
 
 export const router = Router();
-
 
 // Auth Routes
 router.use("/auth", AuthModule.Routes.router);
@@ -13,5 +12,8 @@ router.use("/users", UserModule.Routes.router);
 // Products Routes
 router.use("/products", ProductModule.Routes.router);
 
+// Cart Product Routes
+router.use("/cart-product", CartProductModule.Routes.router);
+
 // Cart Routes
-router.use("/carts", CartModule.Routes.router);
+router.use("/cart", CartModule.Routes.router);

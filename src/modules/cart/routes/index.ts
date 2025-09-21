@@ -4,7 +4,7 @@ import {
   RequestMiddleware,
   ResponseMiddleware,
 } from "../../../middlewares";
-import { addToCartController } from "../controller";
+import { addToCartController, getCartController } from "../controller";
 
 export const router = Router();
 
@@ -15,3 +15,18 @@ router.post(
   RequestMiddleware.checkEmptyRequest({ params: true }),
   ResponseMiddleware.catchAsync(addToCartController)
 );
+
+// Get cart
+router.get(
+  "/cart",
+  AuthMiddleware.authenticated,
+  ResponseMiddleware.catchAsync(getCartController)
+);
+
+// Update Cart Product Quantity
+// router.patch(
+//   "/update/:productId",
+//   AuthMiddleware.authenticated,
+//   RequestMiddleware.checkEmptyRequest({ params: true }),
+//   ResponseMiddleware.catchAsync(updateCartController)
+// );

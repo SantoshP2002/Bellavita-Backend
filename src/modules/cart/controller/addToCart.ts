@@ -13,17 +13,24 @@ export const addToCartController = async (
 ) => {
   const userId = req.user?._id;
   const { productId } = req.params;
-  if (!productId) throw new AppError("Product id is required", 404);
 
   isValidMongoId(productId, "Invalid productId", 400);
 
-  const cart = await Cart.findByIdAndUpdate(
-    userId,
+  const cart = await Cart.findOneAndUpdate(
+    {userId},
     { $setOnInsert: { userId, products: [], totalPrice: 0 } },
     { new: true, upsert: true }
   );
 
   if (!cart) throw new AppError("Cart not found", 404);
+
+  const isProductExistInCart = cart.products.some(
+    (cartProduct) => cartProduct.productId.toString() === productId
+  );
+
+  if (isProductExistInCart) {
+    throw new AppError("Product already in cart", 400);
+  }
 
   const product = await ProductModule.Models.Product.findById(productId).lean();
   if (!product) throw new AppError("Product not found", 404);

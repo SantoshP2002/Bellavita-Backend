@@ -215,10 +215,13 @@ export const multipleImagesUploader = async ({
 };
 
 export const isValidMongoId = (
-  id: string,
+  id: string | undefined | null,
   message: string,
   statusCode?: number
 ): boolean => {
+
+  if(!id) throw new AppError(message, statusCode || 400);
+
   const isValid = Types.ObjectId.isValid(id);
 
   if (!isValid) throw new AppError(message, statusCode || 400);

@@ -13,6 +13,8 @@ export const updateProductCartQuantityController = async (
   const { cartProductId } = req.params;
   isValidMongoId(cartProductId, "Invalid cartProductId", 400);
 
+  console.log("cartProductId", cartProductId);
+
   const cartProduct = await CartProduct.findByIdAndUpdate(
     cartProductId,
     { quantity },

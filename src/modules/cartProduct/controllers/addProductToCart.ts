@@ -22,10 +22,10 @@ export const addProductToCartController = async (
 
   if (!cart) throw new AppError("Cart not found", 404);
 
-  const isProductExistInCart = cart.products.some(
-    (cartProduct) => cartProduct.toString() === productId
-  );
-
+  const isProductExistInCart = await CartProduct.findOne({
+    cart: cart._id,
+    product: productId,
+  }).lean();
   if (isProductExistInCart) throw new AppError("Product already in cart", 400);
 
   const cartProduct = await CartProduct.create({

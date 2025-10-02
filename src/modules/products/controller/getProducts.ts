@@ -6,6 +6,13 @@ export const getAllProductsController = async (req: Request, res: Response) => {
   const limit = Number(req.query?.limit);
   const skip = page && limit ? (page - 1) * limit : 0;
 
+  // const category = req.query?.category as string | undefined;
+  // const filter: Record<string, any> = {};
+
+  // if (category) {
+  //   filter.category = category;
+  // }
+
   // Pagination
   let query = Product.find();
 
@@ -14,9 +21,11 @@ export const getAllProductsController = async (req: Request, res: Response) => {
   }
 
   const [products, totalProducts] = await Promise.all([
-    query.lean().exec(),
+    query.lean(),
     Product.countDocuments().exec(),
   ]);
+
+  console.log("products", products);
 
   res.success(200, "Products found successfully", {
     products,

@@ -51,6 +51,7 @@ export const connectDB = async (): Promise<typeof mongoose> => {
         minPoolSize: 1,
       }),
     });
+    
 
     // Store in global variable for dev hot-reload
     if (NODE_ENV === "development") {

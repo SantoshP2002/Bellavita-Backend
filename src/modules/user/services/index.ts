@@ -45,6 +45,8 @@ export const getUserById = async (
 export const getUserByEmail = async (email: string, needError?: boolean) => {
   const user = await User.findOne({ email });
 
+  console.log("user11111111111111", user)
+
   if (!user && needError !== false) {
     throw new AppError(`User not found with ${email}`, 404);
   }

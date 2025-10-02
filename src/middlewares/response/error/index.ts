@@ -38,6 +38,7 @@ export const error = (
   res: Response,
   __: NextFunction
 ): void => {
+
   const error =
     err instanceof AppError
       ? err

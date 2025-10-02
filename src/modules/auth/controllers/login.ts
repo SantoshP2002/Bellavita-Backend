@@ -8,6 +8,7 @@ export const loginController = async (req: Request, res: Response) => {
 
   const user = await UserModule.Services.getUserByEmail(email);
 
+
   // MatchPassword
   const matchPassword = await bcrypt.compare(password, user.password);
   if (!matchPassword) {

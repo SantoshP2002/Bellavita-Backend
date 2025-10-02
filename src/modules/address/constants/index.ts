@@ -1,0 +1,1 @@
+export const ALLOW_COUNTRIES = ["India", "india"] as const

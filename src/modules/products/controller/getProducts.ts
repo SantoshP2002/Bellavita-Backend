@@ -25,8 +25,6 @@ export const getAllProductsController = async (req: Request, res: Response) => {
     Product.countDocuments().exec(),
   ]);
 
-  console.log("products", products);
-
   res.success(200, "Products found successfully", {
     products,
     currentPage: page || 1,

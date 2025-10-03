@@ -54,3 +54,5 @@ export const addZodSchema = z.object({
       "please provide a valid email address, like example@domain.com"
     ),
 });
+
+export const updateZodSchema = addZodSchema.partial()

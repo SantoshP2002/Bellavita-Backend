@@ -9,6 +9,7 @@ import { addAddressController } from "../controller";
 import { addZodSchema, updateZodSchema } from "../validation";
 import { getUserAddressController } from "../controller/getUserAddress";
 import { updateAddressController } from "../controller/updateAddress";
+import { deleteAddressController } from "../controller/deleteAddress";
 
 export const router = Router();
 
@@ -34,4 +35,11 @@ router.patch(
   RequestMiddleware.checkEmptyRequest({ body: true, params: true }),
   ZodMiddleware.validateZodSchema(updateZodSchema),
   ResponseMiddleware.catchAsyncWithTransaction(updateAddressController)
+);
+
+// delete address
+router.delete(
+  "/delete/:addressId",
+  RequestMiddleware.checkEmptyRequest({ params: true }),
+  ResponseMiddleware.catchAsyncWithTransaction(deleteAddressController)
 );

@@ -6,8 +6,9 @@ import {
   ZodMiddleware,
 } from "../../../middlewares";
 import { addAddressController } from "../controller";
-import { addZodSchema } from "../validation";
+import { addZodSchema, updateZodSchema } from "../validation";
 import { getUserAddressController } from "../controller/getUserAddress";
+import { updateAddressController } from "../controller/updateAddress";
 
 export const router = Router();
 
@@ -25,4 +26,12 @@ router.get(
   "/",
   AuthMiddleware.authenticated,
   ResponseMiddleware.catchAsync(getUserAddressController)
+);
+
+// update address
+router.patch(
+  "/update/:addressId",
+  RequestMiddleware.checkEmptyRequest({ body: true, params: true }),
+  ZodMiddleware.validateZodSchema(updateZodSchema),
+  ResponseMiddleware.catchAsyncWithTransaction(updateAddressController)
 );

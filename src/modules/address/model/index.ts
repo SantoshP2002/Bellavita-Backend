@@ -6,7 +6,7 @@ import { ALLOW_COUNTRIES } from "../constants";
 export const addressSchema = new Schema<IAddress>(
   {
     address: { type: String, required: true },
-    landmark: { type: String , default: ""},
+    landmark: { type: String, default: "" },
     city: { type: String, required: true },
     state: { type: String, required: true },
     pinCode: { type: String, required: true, minlength: 6, maxlength: 6 },
@@ -16,7 +16,7 @@ export const addressSchema = new Schema<IAddress>(
       enum: ALLOW_COUNTRIES,
       default: "India",
     },
-    altPhoneNumber: { type: String, default:""},
+    altPhoneNumber: { type: String, default: "" },
     phoneNumber: { type: String, required: true },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
@@ -36,7 +36,7 @@ export const userAddressSchema = new Schema<IUserAddress>(
       type: [{ type: Schema.Types.ObjectId, ref: "Address" }],
       default: [],
       validate: {
-        validator: function (addresses) {
+        validator: function (addresses: any) {
           return addresses.length <= 5;
         },
         message:
@@ -44,7 +44,7 @@ export const userAddressSchema = new Schema<IUserAddress>(
       },
     },
     defaultAddress: { type: Schema.Types.ObjectId, ref: "Address" },
-    user: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    user: { type: Schema.Types.ObjectId, ref: "User", default: null },
   },
   { timestamps: true, versionKey: false }
 );

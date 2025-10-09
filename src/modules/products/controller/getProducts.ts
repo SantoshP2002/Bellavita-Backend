@@ -6,23 +6,27 @@ export const getAllProductsController = async (req: Request, res: Response) => {
   const limit = Number(req.query?.limit);
   const skip = page && limit ? (page - 1) * limit : 0;
 
-  // const category = req.query?.category as string | undefined;
-  // const filter: Record<string, any> = {};
+  // Get filter and sort query params
+  const category = req.query?.category as string | undefined;
+  const sortBy = req.query?.sortBy as string | undefined;
 
-  // if (category) {
-  //   filter.category = category;
-  // }
+  const filter: Record<string, any> = {};
+  if (category) filter.category = category;
+
+  const sort: Record<string, 1 | -1> = {};
+  if (sortBy === "price_low_high") sort.sellingPrice = 1;
+  else if (sortBy === "price_high_low") sort.sellingPrice = -1;
+  else if (sortBy === "newest_first") sort.createdAt = -1;
+  else if (sortBy === "oldest_first") sort.createdAt = 1;
 
   // Pagination
-  let query = Product.find();
-
-  if (page && limit) {
-    query = query.skip(skip).limit(limit);
-  }
+  let query = Product.find(filter);
+  if (Object.keys(sort).length > 0) query = query.sort(sort);
+  if (page && limit) query = query.skip(skip).limit(limit);
 
   const [products, totalProducts] = await Promise.all([
     query.lean(),
-    Product.countDocuments().exec(),
+    Product.countDocuments(filter).exec(),
   ]);
 
   res.success(200, "Products found successfully", {

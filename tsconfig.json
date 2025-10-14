@@ -15,7 +15,7 @@
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
     "module": "CommonJS",
-    "target": "ES2023",
+    "target": "es2022",
     // "types": [],
     // For nodejs:
     // "lib": ["esnext"],
@@ -44,7 +44,6 @@
     "jsx": "react-jsx",
     "verbatimModuleSyntax": false,
     "isolatedModules": false,
-    "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipDefaultLibCheck": true /* Skip type checking .d.ts files that are included with TypeScript. */,
     "skipLibCheck": true

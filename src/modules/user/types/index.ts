@@ -1,7 +1,9 @@
+import { Types } from "mongoose";
+
 export type TUserRole = "ADMIN" | "USER";
 
 export interface IUser {
-  _id: string;
+  _id: string | Types.ObjectId;
   email: string;
   firstName: string;
   lastName: string;

@@ -22,8 +22,7 @@ export const addressSchema = new Schema<IAddress>(
     lastName: { type: String, required: true },
     email: { type: String, required: true },
     user: { type: Schema.Types.ObjectId, ref: "User", required: true },
-  },
-  { timestamps: true, versionKey: false }
+  }
 );
 
 // Address Model
@@ -45,8 +44,7 @@ export const userAddressSchema = new Schema<IUserAddress>(
     },
     defaultAddress: { type: Schema.Types.ObjectId, ref: "Address" },
     user: { type: Schema.Types.ObjectId, ref: "User", default: null },
-  },
-  { timestamps: true, versionKey: false }
+  }
 );
 
 // User Address Model

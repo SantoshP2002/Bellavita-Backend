@@ -1,8 +1,13 @@
 import { Types } from "mongoose";
+import { CartProductModule } from "../..";
 
 export interface ICart {
-  _id: string
+  _id: string;
   user: Types.ObjectId;
   products: Array<Types.ObjectId>;
-  charges: number;
+}
+
+
+export interface IPopulatedCart extends Omit<ICart, "products"> {
+  products: CartProductModule.ITypes.IPopulatedCartProduct[];
 }

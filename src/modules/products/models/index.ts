@@ -10,7 +10,6 @@ const productSchema = new Schema<IProduct>(
     sellingPrice: { type: Number, required: true },
     images: { type: [String], required: true, default: [] },
     category: { type: String, required: true },
-  },
-  { timestamps: true, versionKey: false }
+  }
 );
 export const Product = model<IProduct>("Product", productSchema);

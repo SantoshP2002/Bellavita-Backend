@@ -17,7 +17,7 @@ router.post(
   ResponseMiddleware.catchAsync(createOrderController)
 );
 
-router.post(
+router.patch(
   "/verify-payment",
   RequestMiddleware.checkEmptyRequest({ body: true }),
   AuthMiddleware.authenticated,

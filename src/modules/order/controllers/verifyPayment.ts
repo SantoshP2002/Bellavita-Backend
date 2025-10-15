@@ -26,11 +26,13 @@ export const verifyPaymentController = async (
     !orderDBId
   )
     throw new AppError("Missing required fields", 400);
+
   // expectedSignature
   const expectedSignature = crypto
     .createHmac("sha256", RAZORPAY_KEY_SECRET!)
     .update(razorpay_order_id + "|" + razorpay_payment_id)
     .digest("hex");
+
   // expectedSignature compare razorpay signature
   if (expectedSignature !== razorpay_signature) {
     throw new AppError("Invalid Signature", 400);
@@ -39,7 +41,7 @@ export const verifyPaymentController = async (
   // fetch with payment id in payment
   const payment: any = await razorpay.payments.fetch(razorpay_payment_id);
 
-  if (payment) {
+  if (!payment) {
     throw new AppError("Payment not captured", 400);
   }
 
@@ -119,12 +121,6 @@ export const verifyPaymentController = async (
       // check order exist or not
       if (!order) throw new AppError("Order Not Found in verify Payment", 400);
 
-      for (const item of order.products) {
-        await ProductModule.Models.Product.updateOne({
-          _id: item.product._id,
-        });
-      }
-
       // cart find one
       const cart = await CartModule.Models.Cart.findOne({ user: user?._id });
       if (!cart) throw new AppError("Cart Not Found in verify Payment", 400);
@@ -133,6 +129,7 @@ export const verifyPaymentController = async (
       await CartProductModule.Models.CartProduct.deleteMany({
         _id: { $in: cart.products.map((p) => p._id) },
       });
+
       // cart find and update
       await CartModule.Models.Cart.findOneAndUpdate(
         { user: user?._id },

@@ -5,7 +5,7 @@ import { AppError } from "../../../classes";
 import { RAZORPAY_KEY_SECRET } from "../../../env";
 import { razorpay } from "../../../configs/razorpay";
 import { Order } from "../schema";
-import { CartModule, CartProductModule, ProductModule } from "../..";
+import { CartModule, CartProductModule } from "../..";
 
 export const verifyPaymentController = async (
   req: AuthenticatedRequest,

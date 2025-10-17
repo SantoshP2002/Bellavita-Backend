@@ -6,6 +6,8 @@ import {
 } from "../../../middlewares";
 import { createOrderController } from "../controllers/createOrder";
 import { verifyPaymentController } from "../controllers";
+import { getOrderController } from "../controllers/getOrder";
+import { getByIdOrderController } from "../controllers/getIdOrder";
 
 export const router = Router();
 
@@ -22,4 +24,16 @@ router.patch(
   RequestMiddleware.checkEmptyRequest({ body: true }),
   AuthMiddleware.authenticated,
   ResponseMiddleware.catchAsync(verifyPaymentController)
+);
+
+router.get(
+  "/",
+  AuthMiddleware.authenticated,
+  ResponseMiddleware.catchAsync(getOrderController)
+);
+router.get(
+  "/:orderId",
+  RequestMiddleware.checkEmptyRequest({ params: true }),
+  AuthMiddleware.authenticated,
+  ResponseMiddleware.catchAsync(getByIdOrderController)
 );

@@ -61,7 +61,6 @@ export const createOrderController = async (
       },
     });
   } catch (error) {
-    
     console.error("Razorpay order creation failed:", error);
     throw new AppError("Payment gateway error, please try again later", 502);
   }
@@ -97,7 +96,7 @@ export const createOrderController = async (
 
   const order = new Order(orderBody);
 
-  const createOrder = await order.save()
+  const createOrder = await order.save();
 
   res.success(201, "Order Created Successfully", {
     createOrder,

@@ -8,6 +8,7 @@ import { createOrderController } from "../controllers/createOrder";
 import { verifyPaymentController } from "../controllers";
 import { getOrderController } from "../controllers/getOrder";
 import { getByIdOrderController } from "../controllers/getIdOrder";
+import { cancelPaymentController } from "../controllers/cancelPayment";
 
 export const router = Router();
 
@@ -36,4 +37,11 @@ router.get(
   RequestMiddleware.checkEmptyRequest({ params: true }),
   AuthMiddleware.authenticated,
   ResponseMiddleware.catchAsync(getByIdOrderController)
+);
+
+router.patch(
+  "/cancel-payment/:orderId",
+  RequestMiddleware.checkEmptyRequest({ params: true }),
+  AuthMiddleware.authenticated,
+  ResponseMiddleware.catchAsync(cancelPaymentController)
 );

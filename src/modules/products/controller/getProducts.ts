@@ -9,8 +9,15 @@ export const getAllProductsController = async (req: Request, res: Response) => {
   // Get filter and sort query params
   const category = req.query?.category as string | undefined;
   const sortBy = req.query?.sortBy as string | undefined;
+  const search = req.query?.search as string | undefined;
 
   const filter: Record<string, any> = {};
+
+  if (search) {
+    const regex = new RegExp(search, "i");
+    filter.$or = [{ title: regex }, { brand: regex }, { category: regex }];
+  }
+
   if (category) filter.category = category;
 
   const sort: Record<string, 1 | -1> = {};

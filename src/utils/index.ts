@@ -4,7 +4,7 @@ import { Types } from "mongoose";
 import { AppError } from "../classes";
 import { cloudinaryConnection, myCloudinary } from "../configs/cloudinary";
 import { CLOUDINARY_MAIN_FOLDER } from "../env";
-import { MultipleFileUploaderProps, SingleFileUploaderProps } from "../types";
+import { CheckUserPermission, MultipleFileUploaderProps, SingleFileUploaderProps } from "../types";
 
 // ========== HELPER: Get Cloudinary Optimized URL ==========
 export const getCloudinaryOptimizedUrl = (url: string): string => {
@@ -226,5 +226,18 @@ export const isValidMongoId = (
 
   if (!isValid) throw new AppError(message, statusCode || 400);
 
+  return true;
+};
+
+
+export const checkUserPermission = ({
+  userId,
+  checkId,
+  message = "Unauthorized.",
+  statusCode = 403,
+}: CheckUserPermission) => {
+  if (userId.toString() !== checkId.toString()) {
+    throw new AppError(message, statusCode);
+  }
   return true;
 };

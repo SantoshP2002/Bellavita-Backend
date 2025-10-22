@@ -6,6 +6,7 @@ import {
   CartProductModule,
   OrderModule,
   ProductModule,
+  ReviewModule,
   UserModule,
 } from "../modules";
 
@@ -31,3 +32,6 @@ router.use("/address", AddressModule.Routes.router);
 
 // Order Route
 router.use("/order", OrderModule.Routes.router);
+
+// Review Route
+router.use("/review", ReviewModule.Routes.router)

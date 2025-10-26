@@ -2,6 +2,7 @@ import { Request } from "express";
 import multer from "multer";
 
 import { UserModule } from "../modules";
+import { Types } from "mongoose";
 
 // Interface for authenticated requests with user
 export interface AuthenticatedRequest extends Request {
@@ -54,8 +55,8 @@ export interface ValidateRequiredFileFieldsParams {
 }
 
 export interface CheckUserPermission {
-  userId: string | UserModule.ITypes.IUser;
-  checkId: string | UserModule.ITypes.IUser;
+  userId: string | Types.ObjectId | UserModule.ITypes.IUser;
+  checkId: string | Types.ObjectId | UserModule.ITypes.IUser;
   message: string;
   statusCode?: number;
 }

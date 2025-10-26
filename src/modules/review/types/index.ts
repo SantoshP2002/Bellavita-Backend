@@ -5,6 +5,8 @@ export interface ReviewProps {
   _id: Types.ObjectId;
   rating: number;
   title: string;
+  name: string;
+  description: string;
   product: Types.ObjectId;
   user: Types.ObjectId;
   images: string[];

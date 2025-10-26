@@ -1,7 +1,7 @@
 import z from "zod";
 
 export const createReviewZodSchema = z.object({
-  rating: z
+  rating: z.coerce
     .number("Rating must be Required")
     .min(1, "Rating must be at least 1")
     .max(5, "Rating must be maximum 5"),

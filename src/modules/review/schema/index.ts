@@ -7,6 +7,8 @@ export const reviewSchema = new Schema<ReviewProps>(
     user: { type: Schema.Types.ObjectId, ref: "User", required: true },
     rating: { type: Number, min: 1, max: 5, required: true, default: 1 },
     title: { type: String, trim: true, required: true },
+    description: { type: String, trim: true, required: true },
+    name: { type: String, trim: true, required: true },
     images: { type: [String], default: [] },
     likes: { type: [Types.ObjectId], default: [] },
     dislikes: { type: [Types.ObjectId], default: [] },
@@ -17,7 +19,9 @@ export const reviewSchema = new Schema<ReviewProps>(
 reviewSchema.index({ product: 1 });
 reviewSchema.index({ user: 1 });
 reviewSchema.index({ rating: 1 });
+reviewSchema.index({ name: 1 });
 reviewSchema.index({ title: 1 });
+reviewSchema.index({ description: 1 });
 reviewSchema.index({ createdAt: 1 });
 reviewSchema.index({ images: 1 });
 reviewSchema.index({ likes: 1 });

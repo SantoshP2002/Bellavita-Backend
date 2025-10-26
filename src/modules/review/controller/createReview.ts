@@ -28,7 +28,10 @@ export const createReviewController = async (
 
   const files = req.files as { [fieldname: string]: Express.Multer.File[] };
 
+  // console.log("files111", files);
   const images = files?.images;
+
+  
 
   // Product
   const product = await ProductModule.Models.Product.findById(productId);
@@ -52,6 +55,8 @@ export const createReviewController = async (
     user: user?._id,
     rating: body.rating,
     title: body.title,
+    description: body.description,
+    name: body.name,
     images: uploadedImages,
     likes: [],
     dislikes: [],

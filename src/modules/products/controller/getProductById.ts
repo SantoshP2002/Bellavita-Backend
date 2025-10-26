@@ -4,8 +4,8 @@ import { AppError } from "../../../classes";
 
 export const getProductByIdController = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const product = await Product.findById(id);
-  console.log("product", product, id)
+  const product = await Product.findById(id).populate("reviews");
+  // console.log("product", product, id)
   if (!product) {
     throw new AppError("Product not found", 404);
   }

@@ -7,9 +7,10 @@ import {
   ResponseMiddleware,
   ZodMiddleware,
 } from "../../../middlewares";
-import { createReviewController } from "../controller";
+import { createReviewController, deleteReviewController } from "../controller";
 import { createReviewZodSchema, updateReviewZodSchema } from "../validations";
 import { updateReviewController } from "../controller/updateReview";
+import { getReviewsByProductIdController } from "../controller/getReviewByProductId";
 
 export const router = Router();
 
@@ -40,4 +41,19 @@ router.patch(
   }),
   ZodMiddleware.validateZodSchema(updateReviewZodSchema),
   ResponseMiddleware.catchAsync(updateReviewController)
+);
+
+// Delete Review (reviewId, productId)
+router.delete(
+  "/:productId/:reviewId",
+  RequestMiddleware.checkEmptyRequest({ params: true }),
+  AuthMiddleware.authenticated,
+  ResponseMiddleware.catchAsync(deleteReviewController)
+);
+
+// get By Product ID
+router.get(
+  "/:productId",
+  RequestMiddleware.checkEmptyRequest({ params: true }),
+  ResponseMiddleware.catchAsync(getReviewsByProductIdController)
 );

@@ -14,5 +14,5 @@ export const uploadSingleImageController = async (
     folder: folderName,
   });
 
-  res.success(200, "Image Upload Successfully", { result });
+  res.success(200, "Image Upload Successfully", { url: result.secure_url });
 };

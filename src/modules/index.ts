@@ -6,3 +6,4 @@ export * as CartProductModule from "./cartProduct";
 export * as AddressModule from "./address"
 export * as OrderModule from "./order"
 export * as ReviewModule from "./review"
+export * as MediaModule from "./media"

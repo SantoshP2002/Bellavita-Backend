@@ -56,7 +56,6 @@ export const updateReviewController = async (
       const imgResult = await multipleImagesUploader({
         files: images,
         folder: `Reviews/${productTitle}`,
-        // cloudinaryConfigOption: "image",
       });
       uploadImages = imgResult.map((img) => img.secure_url);
       review?.images.push(...uploadImages);

@@ -4,8 +4,6 @@ import { AppError } from "../../../classes";
 import { multipleImagesUploader } from "../../../utils";
 
 export const createProductsController = async (req: Request, res: Response) => {
-  const { title, brand, description, price, sellingPrice, category } = req.body;
-
   const files = req.files as {
     [fieldname: string]: Express.Multer.File[];
   };
@@ -23,14 +21,10 @@ export const createProductsController = async (req: Request, res: Response) => {
   }
 
   const product = await Product.create({
-    title,
-    brand,
-    description,
-    price,
-    sellingPrice,
-    category,
+    ...req?.body,
     images: imgUrls,
   });
+
   if (!product) {
     throw new AppError("Failed to create product", 400);
   }

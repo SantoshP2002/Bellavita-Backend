@@ -7,7 +7,10 @@ import {
   ZodMiddleware,
 } from "../../../middlewares";
 import { uploadImageZodSchema } from "../validation";
-import { uploadSingleImageController } from "../controllers";
+import {
+  uploadMultipleImagesController,
+  uploadSingleImageController,
+} from "../controllers";
 
 export const router = Router();
 
@@ -24,3 +27,22 @@ router.post(
   ZodMiddleware.validateZodSchema(uploadImageZodSchema),
   ResponseMiddleware.catchAsync(uploadSingleImageController)
 );
+
+// Multiple Image Upload
+router.post(
+  "images/upload",
+  AuthMiddleware.authorized(["ADMIN", "USER"]),
+  MulterMiddleware.validateFiles({
+    type: "array",
+    fieldName: "images",
+  }),
+  RequestMiddleware.checkEmptyRequest({
+    files: true,
+    body: true,
+  }),
+  ZodMiddleware.validateZodSchema(uploadImageZodSchema),
+  ResponseMiddleware.catchAsync(uploadMultipleImagesController)
+);
+
+// single image Remove
+

@@ -6,8 +6,12 @@ import {
   ResponseMiddleware,
   ZodMiddleware,
 } from "../../../middlewares";
-import { uploadImageZodSchema } from "../validation";
 import {
+  removeSingleImageZodSchema,
+  uploadImageZodSchema,
+} from "../validation";
+import {
+  removeSingleImageController,
   uploadMultipleImagesController,
   uploadSingleImageController,
 } from "../controllers";
@@ -45,4 +49,10 @@ router.post(
 );
 
 // single image Remove
-
+router.delete(
+  "/image/delete",
+  RequestMiddleware.checkEmptyRequest({ body: true }),
+  AuthMiddleware.authorized(["ADMIN", "USER"]),
+  ZodMiddleware.validateZodSchema(removeSingleImageZodSchema),
+  ResponseMiddleware.catchAsync(removeSingleImageController)
+);

@@ -4,6 +4,7 @@ import {
   AuthModule,
   CartModule,
   CartProductModule,
+  MediaModule,
   OrderModule,
   ProductModule,
   ReviewModule,
@@ -34,4 +35,7 @@ router.use("/address", AddressModule.Routes.router);
 router.use("/order", OrderModule.Routes.router);
 
 // Review Route
-router.use("/review", ReviewModule.Routes.router)
+router.use("/review", ReviewModule.Routes.router);
+
+// media Route
+router.use("/media", MediaModule.Routes.router);

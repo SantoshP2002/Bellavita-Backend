@@ -8,6 +8,7 @@ import {
   CheckUserPermission,
   MultipleFileUploaderProps,
   SingleFileUploaderProps,
+  ZodCommonConfigs,
   ZodStringConfigs,
 } from "../types";
 import z from "zod";
@@ -276,9 +277,7 @@ export const validateZodString = ({
         : `The '${nestedField}' field does not match the required format.`,
   };
 
-  let schema = z
-    .string(messages.invalid_type)
-    .trim();
+  let schema = z.string(messages.invalid_type).trim();
 
   if (nonEmpty) {
     schema = schema.nonempty({ message: messages.non_empty });
@@ -308,4 +307,12 @@ export const validateZodString = ({
   }
 
   return isOptional ? schema.optional() : schema;
+};
+
+export const validateZodUrl = ({ ...props }: ZodCommonConfigs) => {
+  return validateZodString({
+    ...props,
+    blockSingleSpace: true,
+    customRegex: { regex: regexes.validUrl, message: "must be a valid URL" },
+  });
 };

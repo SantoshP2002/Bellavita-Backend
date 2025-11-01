@@ -7,6 +7,7 @@ import {
   ZodMiddleware,
 } from "../../../middlewares";
 import {
+  removeMultipleImagesZodSchema,
   removeSingleImageZodSchema,
   uploadImageZodSchema,
 } from "../validation";
@@ -15,6 +16,7 @@ import {
   uploadMultipleImagesController,
   uploadSingleImageController,
 } from "../controllers";
+import { removeMultipleImageController } from "../controllers/removeMultipleImages";
 
 export const router = Router();
 
@@ -27,14 +29,14 @@ router.post(
     type: "single",
     fieldName: "image",
   }),
-  RequestMiddleware.checkEmptyRequest({ file: true, fileOrBody: true }),
+  RequestMiddleware.checkEmptyRequest({ file: true }),
   ZodMiddleware.validateZodSchema(uploadImageZodSchema),
   ResponseMiddleware.catchAsync(uploadSingleImageController)
 );
 
 // Multiple Image Upload
 router.post(
-  "images/upload",
+  "/images/upload",
   AuthMiddleware.authorized(["ADMIN", "USER"]),
   MulterMiddleware.validateFiles({
     type: "array",
@@ -55,4 +57,13 @@ router.delete(
   AuthMiddleware.authorized(["ADMIN", "USER"]),
   ZodMiddleware.validateZodSchema(removeSingleImageZodSchema),
   ResponseMiddleware.catchAsync(removeSingleImageController)
+);
+
+// multiple image remove
+router.delete(
+  "/images/delete",
+  RequestMiddleware.checkEmptyRequest({ body: true }),
+  AuthMiddleware.authorized(["ADMIN", "USER"]),
+  ZodMiddleware.validateZodSchema(removeMultipleImagesZodSchema),
+  ResponseMiddleware.catchAsync(removeMultipleImageController)
 );

@@ -8,6 +8,7 @@ export const getAllProductsController = async (req: Request, res: Response) => {
 
   // Get filter and sort query params
   const category = req.query?.category as string | undefined;
+  const subCategory = req.query?.subCategory as string | undefined;
   const sortBy = req.query?.sortBy as string | undefined;
   const search = req.query?.search as string | undefined;
 
@@ -15,10 +16,18 @@ export const getAllProductsController = async (req: Request, res: Response) => {
 
   if (search) {
     const regex = new RegExp(search, "i");
-    filter.$or = [{ title: regex }, { brand: regex }, { category: regex }];
+    filter.$or = [
+      { title: regex },
+      { brand: regex },
+      { "category.name": regex },
+      { "category.value": regex },
+      { "subCategory.name": regex },
+      { "subCategory.value": regex },
+    ];
   }
 
-  if (category) filter.category = category;
+  if (category) filter["category.value"] = category;
+  if (subCategory) filter["subCategory.value"] = subCategory;
 
   const sort: Record<string, 1 | -1> = {};
   if (sortBy === "price_low_high") sort.sellingPrice = 1;

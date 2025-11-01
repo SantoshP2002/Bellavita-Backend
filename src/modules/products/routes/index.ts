@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   AuthMiddleware,
+  JSONParseMiddleware,
   MulterMiddleware,
   ResponseMiddleware,
 } from "../../../middlewares";
@@ -25,6 +26,7 @@ router.post(
     type: "fields",
     fieldsConfig: [{ name: "images", maxCount: 8 }],
   }),
+  JSONParseMiddleware.JSONParse({ fieldsToParse: ["category", "subCategory"] }),
   ResponseMiddleware.catchAsync(createProductsController)
 );
 // Get By Id
@@ -37,6 +39,7 @@ router.patch(
     type: "fields",
     fieldsConfig: [{ name: "images", maxCount: 8 }],
   }),
+  JSONParseMiddleware.JSONParse({ fieldsToParse: ["category", "subCategory"] }),
   ResponseMiddleware.catchAsync(updateProductController)
 );
 

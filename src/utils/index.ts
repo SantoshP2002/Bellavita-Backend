@@ -4,7 +4,14 @@ import { Types } from "mongoose";
 import { AppError } from "../classes";
 import { cloudinaryConnection, myCloudinary } from "../configs/cloudinary";
 import { CLOUDINARY_MAIN_FOLDER } from "../env";
-import { CheckUserPermission, MultipleFileUploaderProps, SingleFileUploaderProps } from "../types";
+import {
+  CheckUserPermission,
+  MultipleFileUploaderProps,
+  SingleFileUploaderProps,
+  ZodStringConfigs,
+} from "../types";
+import z from "zod";
+import { regexes } from "../constants/regex";
 
 // ========== HELPER: Get Cloudinary Optimized URL ==========
 export const getCloudinaryOptimizedUrl = (url: string): string => {
@@ -219,8 +226,7 @@ export const isValidMongoId = (
   message: string,
   statusCode?: number
 ): boolean => {
-
-  if(!id) throw new AppError(message, statusCode || 400);
+  if (!id) throw new AppError(message, statusCode || 400);
 
   const isValid = Types.ObjectId.isValid(id);
 
@@ -228,7 +234,6 @@ export const isValidMongoId = (
 
   return true;
 };
-
 
 export const checkUserPermission = ({
   userId,
@@ -240,4 +245,67 @@ export const checkUserPermission = ({
     throw new AppError(message, statusCode);
   }
   return true;
+};
+
+export const validateZodString = ({
+  field,
+  nonEmpty = true,
+  min,
+  max,
+  blockSingleSpace,
+  blockMultipleSpaces,
+  parentField,
+  customRegex,
+  isOptional = false,
+}: ZodStringConfigs) => {
+  const nestedField = parentField
+    ? `${parentField}${parentField.includes("[") ? " " : "."}${field}`
+    : field;
+
+  const messages = {
+    required: `The '${nestedField}' field is required.`,
+    invalid_type: `The '${nestedField}' field must be a string.`,
+    non_empty: `The '${nestedField}' field cannot be empty.`,
+    min: `The '${nestedField}' field must be at least ${min} characters.`,
+    max: `The '${nestedField}' field must not exceed ${max} characters.`,
+    multiple_spaces: `The '${nestedField}' field must not contain multiple consecutive spaces.`,
+    single_space: `The '${nestedField}' field must not contain any spaces.`,
+    custom: (msg: string | number) =>
+      msg
+        ? `The '${nestedField}' field ${msg}.`
+        : `The '${nestedField}' field does not match the required format.`,
+  };
+
+  let schema = z
+    .string(messages.invalid_type)
+    .trim();
+
+  if (nonEmpty) {
+    schema = schema.nonempty({ message: messages.non_empty });
+  }
+
+  if (nonEmpty && min !== undefined) {
+    schema = schema.min(min, messages.min);
+  }
+
+  if (nonEmpty && max !== undefined) {
+    schema = schema.max(max, messages.max);
+  }
+
+  if (blockMultipleSpaces) {
+    schema = schema.regex(regexes.singleSpace, messages.multiple_spaces);
+  }
+
+  if (blockSingleSpace) {
+    schema = schema.regex(regexes.noSpace, messages.single_space);
+  }
+
+  if (customRegex?.regex) {
+    schema = schema.regex(
+      customRegex.regex,
+      `${messages.custom(customRegex.message)}`
+    );
+  }
+
+  return isOptional ? schema.optional() : schema;
 };

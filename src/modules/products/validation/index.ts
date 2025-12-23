@@ -22,21 +22,11 @@ export const createProductZodSchema = z
       .string({ error: "Description must be string" })
       .nonempty("Description is required")
       .min(1, { message: "Description must have minimum 2 characters long" }),
-    keyBenefits: z
-      .string({ error: "Key benefits must be string" })
-      .min(1, { message: "Key benefits must have minimum 2 characters long" })
-      .optional(),
-    howToUse: z
-      .string({ error: "How To Use must be string" })
-      .min(1, { message: "How To Use must have minimum 2 characters long" })
-      .optional(),
-    ingredients: z
-      .string({ error: "ingredients must be string" })
-      .min(1, { message: "ingredients must have minimum 2 characters long" })
-      .optional(),
+    keyBenefits: z.string({ error: "Key benefits must be string" }).optional(),
+    howToUse: z.string({ error: "How To Use must be string" }).optional(),
+    ingredients: z.string({ error: "ingredients must be string" }).optional(),
     otherInformation: z
       .string({ error: "otherInformation must be string" })
-      .min(1, { message: "otherInformation must have minimum 2 characters long" })
       .optional(),
     category: z.object({
       name: z.string().nonempty("Category name is required"),

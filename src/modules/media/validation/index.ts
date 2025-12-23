@@ -5,7 +5,6 @@ import { validateZodString, validateZodUrl } from "../../../utils";
 export const uploadImageZodSchema = z.object({
   folderName: validateZodString({
     field: "folderName",
-    blockSingleSpace: true,
   }),
 });
 

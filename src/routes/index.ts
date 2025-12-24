@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   AddressModule,
   AuthModule,
+  BlogModule,
   CartModule,
   CartProductModule,
   MediaModule,
@@ -39,3 +40,6 @@ router.use("/review", ReviewModule.Routes.router);
 
 // media Route
 router.use("/media", MediaModule.Routes.router);
+
+// blog Route
+router.use("/blog", BlogModule.Routes.router);

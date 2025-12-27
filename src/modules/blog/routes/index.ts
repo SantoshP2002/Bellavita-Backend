@@ -9,6 +9,7 @@ import {
   getBlogByIdController,
   getBlogController,
 } from "../controller/getBlogController";
+import { updateBlogController } from "../controller/updateBlog";
 
 export const router = Router();
 
@@ -28,3 +29,13 @@ router.get("/", ResponseMiddleware.catchAsync(getBlogController));
 
 // Get Blog by ID
 router.get("/:id", ResponseMiddleware.catchAsync(getBlogByIdController));
+
+// Update Blog
+router.patch(
+  "/:id",
+  MulterMiddleware.validateFiles({
+    type: "single",
+    fieldName: "image",
+  }),
+  ResponseMiddleware.catchAsync(updateBlogController)
+);

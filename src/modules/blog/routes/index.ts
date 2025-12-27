@@ -10,6 +10,7 @@ import {
   getBlogController,
 } from "../controller/getBlogController";
 import { updateBlogController } from "../controller/updateBlog";
+import { DeleteBlogByIdController } from "../controller/deleteBlogById";
 
 export const router = Router();
 
@@ -39,3 +40,6 @@ router.patch(
   }),
   ResponseMiddleware.catchAsync(updateBlogController)
 );
+
+// Delete Blog
+router.delete("/:id", ResponseMiddleware.catchAsync(DeleteBlogByIdController));

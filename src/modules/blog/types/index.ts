@@ -4,6 +4,7 @@ export interface IBlog {
   description: string;
   blog: string;
   image: string;
+  imagePublicId: string;
   createdAt: Date;
   updatedAt: Date;
 }

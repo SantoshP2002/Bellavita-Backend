@@ -40,7 +40,7 @@ const extractPublicId = (imageUrl: string): string => {
 };
 
 // ========== COMMON REMOVER FUNCTION ==========
-const removeFromCloudinary = async (
+export const removeFromCloudinary = async (
   publicId: string
 ): Promise<UploadApiResponse> => {
   const cloudinary = myCloudinary();

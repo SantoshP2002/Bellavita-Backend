@@ -7,10 +7,6 @@ const blogSchema = new Schema<IBlog>(
     description: { type: String, required: true },
     blog: { type: String, required: true },
     image: { type: String, required: true },
-    imagePublicId: {
-      type: String,
-      required: true,
-    },
   },
   { timestamps: true, versionKey: false }
 );

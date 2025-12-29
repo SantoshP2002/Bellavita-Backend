@@ -11,7 +11,7 @@ export const getByIdOrderController = async (
 
   console.log("OrderID", orderId);
 
-  const order = await Order.findById(orderId);
+  const order = await Order.findById(orderId).populate("products.product");
 
   if (!order) {
     throw new AppError("Order Not Found in get Id Order", 400);

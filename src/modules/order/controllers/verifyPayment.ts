@@ -113,7 +113,8 @@ export const verifyPaymentController = async (
 
             "order_result.paid_at": new Date(payment.created_at * 1000),
             "order_result.order_status": "CONFIRMED",
-            "order_result.payment_receipt": `payment_receipt_${Date.now()}`,
+            // "order_result.payment_receipt": `payment_receipt_${Date.now()}`,
+            "order_result.order_receipt": `payment_receipt_${Date.now()}`,
           },
         },
         { new: true }

@@ -1,10 +1,15 @@
 import { google } from "googleapis";
 import axios from "axios";
+import {
+  GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET,
+  GOOGLE_REDIRECT_URI,
+} from "../../env";
 
 export const googleAuthConfig = new google.auth.OAuth2(
-  process.env.G_CLIENT_ID,
-  process.env.G_CLIENT_SECRET,
-  process.env.G_REDIRECT_URI
+  GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET,
+  GOOGLE_REDIRECT_URI
 );
 
 export const googleAuthClient = {
@@ -18,7 +23,7 @@ export const googleAuthClient = {
       "https://www.googleapis.com/auth/userinfo.email",
     ],
     prompt: "consent", // permission
-    redirect_uri: process.env.G_REDIRECT_URI!, // Login ke baad Google isi URL pe redirect karega
+    redirect_uri: GOOGLE_REDIRECT_URI!, // Login ke baad Google isi URL pe redirect karega
   }),
 
   // DECODE

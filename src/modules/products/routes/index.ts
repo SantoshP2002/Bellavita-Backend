@@ -12,6 +12,7 @@ import {
   getProductByIdController,
   updateProductController,
 } from "../controller";
+import { getMyProductsController } from "../controller/getMyProduct";
 
 export const router = Router();
 
@@ -29,8 +30,18 @@ router.post(
   JSONParseMiddleware.JSONParse({ fieldsToParse: ["category", "subCategory"] }),
   ResponseMiddleware.catchAsync(createProductsController)
 );
+
+
+// get My Product
+router.get(
+  "/my-products",
+  AuthMiddleware.authorized(["ADMIN"]),
+  ResponseMiddleware.catchAsync(getMyProductsController)
+);
+
 // Get By Id
 router.get("/:id", ResponseMiddleware.catchAsync(getProductByIdController));
+
 
 // Update product
 router.patch(

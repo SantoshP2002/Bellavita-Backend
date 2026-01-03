@@ -31,6 +31,11 @@ const productSchema = new Schema<IProduct>(
     images: { type: [String], required: true, default: [] },
     category: categorySchema,
     subCategory: subCategorySchema,
+    createdBy: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
   { versionKey: false, timestamps: true }
 );

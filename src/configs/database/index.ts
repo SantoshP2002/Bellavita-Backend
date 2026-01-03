@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { MONGODB_URI, NODE_ENV } from "../../env";
+import { MONGODB_URI, IS_DEV } from "../../env";
 
 // TypeScript global augmentation
 declare global {
@@ -46,15 +46,14 @@ export const connectDB = async (): Promise<typeof mongoose> => {
 
     const newConnection = await mongoose.connect(MONGODB_URI, {
       ...MONGO_OPTIONS,
-      ...(NODE_ENV === "development" && {
+      ...(IS_DEV === "true" && {
         maxPoolSize: 5, // Smaller pool for dev
         minPoolSize: 1,
       }),
     });
-    
 
     // Store in global variable for dev hot-reload
-    if (NODE_ENV === "development") {
+    if (IS_DEV === "true") {
       global.mongooseConn = newConnection;
     }
 

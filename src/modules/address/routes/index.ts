@@ -40,6 +40,7 @@ router.patch(
 // delete address
 router.delete(
   "/delete/:addressId",
+  AuthMiddleware.authenticated,
   RequestMiddleware.checkEmptyRequest({ params: true }),
   ResponseMiddleware.catchAsyncWithTransaction(deleteAddressController)
 );

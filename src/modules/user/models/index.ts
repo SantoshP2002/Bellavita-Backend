@@ -19,11 +19,7 @@ const userSchema = new Schema<IUser>(
       required: true,
       minLength: 2,
     },
-    password: {
-      type: String,
-      required: true,
-      minLength: 6,
-    },
+    password: { type: String, default: "" },
     role: {
       type: String,
       enum: ["ADMIN", "USER"],

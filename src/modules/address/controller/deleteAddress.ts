@@ -16,23 +16,14 @@ export const deleteAddressController = async (
 
   isValidMongoId(addressId, "Invalid Address Id provided", 404);
 
-  const userAddress = await UserAddress.findOne({ user: userId }).session(
-    session
-  );
+  const userAddress = await UserAddress.findOne({ user: userId });
 
-if (!userAddress) {
+  if (!userAddress) {
     throw new AppError("User address not found to delete", 404);
   }
+
   const isDefaultAddress =
     userAddress?.defaultAddress?.toString() === addressId;
-  // Direct Delete
-  const deleteAddress = await Address.findByIdAndDelete(addressId).session(
-    session
-  );
-
-  if (!deleteAddress) {
-    throw new AppError("Failed to delete address", 401);
-  }
 
   if (isDefaultAddress) {
     const updateUserAddresses = await UserAddress.findOneAndUpdate(
@@ -44,6 +35,15 @@ if (!userAddress) {
     if (!updateUserAddresses) {
       throw new AppError("Failed to delete address", 401);
     }
+  }
+
+  // Direct Delete
+  const deleteAddress = await Address.findByIdAndDelete(addressId).session(
+    session
+  );
+
+  if (!deleteAddress) {
+    throw new AppError("Failed to delete address", 401);
   }
 
   res.success(202, "Address Deleted Successfully");

@@ -15,6 +15,7 @@ export interface IProduct {
   subCategory: { name: string; value: string };
   reviews: Types.ObjectId[];
   images: string[];
+  createdBy: Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
 }

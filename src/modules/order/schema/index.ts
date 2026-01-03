@@ -51,6 +51,7 @@ export const orderSchema = new Schema<IOrder>(
     user: {
       type: Schema.Types.ObjectId,
       ref: "User",
+      required: true,
     },
     products: [
       {
@@ -60,6 +61,7 @@ export const orderSchema = new Schema<IOrder>(
           required: true,
         },
         quantity: { type: Number, required: true, min: 1, max: 5 },
+        createdBy: { type: Schema.Types.ObjectId, ref: "User" },
       },
     ],
     address: {

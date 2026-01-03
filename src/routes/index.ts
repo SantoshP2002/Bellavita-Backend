@@ -11,6 +11,8 @@ import {
   ReviewModule,
   UserModule,
 } from "../modules";
+import { ResponseMiddleware } from "../middlewares";
+import { googleCallback, googleRedirect } from "../modules/auth/googleAuth";
 
 export const router = Router();
 
@@ -43,3 +45,10 @@ router.use("/media", MediaModule.Routes.router);
 
 // blog Route
 router.use("/blog", BlogModule.Routes.router);
+
+
+
+
+// GOOGLE ROUTE
+router.get("/google", ResponseMiddleware.catchAsync(googleRedirect));
+router.get("/google/callback", ResponseMiddleware.catchAsync(googleCallback));

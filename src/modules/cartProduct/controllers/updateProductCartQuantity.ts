@@ -1,11 +1,11 @@
 import { Response } from "express";
-import { AuthorizedRequest } from "../../../types";
+import { AuthenticatedRequest } from "../../../types";
 import { CartProduct } from "../model";
 import { isValidMongoId } from "../../../utils";
 import { AppError } from "../../../classes";
 
 export const updateProductCartQuantityController = async (
-  req: AuthorizedRequest,
+  req: AuthenticatedRequest,
   res: Response
 ) => {
   const { quantity } = req.body;

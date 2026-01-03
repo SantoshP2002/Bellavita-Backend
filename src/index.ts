@@ -2,7 +2,7 @@ import "dotenv/config";
 import express, { Request, Response } from "express";
 import QueryString from "qs";
 
-import { NODE_ENV, PORT } from "./env";
+import { IS_DEV, PORT } from "./env";
 import { router } from "./routes";
 import { connectDB } from "./configs";
 import {
@@ -35,7 +35,7 @@ app.use("/api", router);
 app.use(ResponseMiddleware.notFound);
 app.use(ResponseMiddleware.error);
 
-if (NODE_ENV === "development") {
+if (IS_DEV === "true") {
   app.listen(port, async () => {
     try {
       await connectDB();

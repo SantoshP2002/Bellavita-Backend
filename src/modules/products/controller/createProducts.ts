@@ -1,9 +1,14 @@
-import { Request, Response } from "express";
+import { Response } from "express";
+import { AuthorizedRequest } from "../../../types";
 import { Product } from "../models";
 import { AppError } from "../../../classes";
 import { multipleImagesUploader } from "../../../utils";
 
-export const createProductsController = async (req: Request, res: Response) => {
+export const createProductsController = async (
+  req: AuthorizedRequest,
+  res: Response
+) => {
+  const user = req.user;
   const files = req.files as {
     [fieldname: string]: Express.Multer.File[];
   };
@@ -23,6 +28,7 @@ export const createProductsController = async (req: Request, res: Response) => {
   const product = await Product.create({
     ...req?.body,
     images: imgUrls,
+    createdBy: user?._id,
   });
 
   if (!product) {

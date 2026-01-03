@@ -7,7 +7,6 @@ export interface ICart {
   products: Array<Types.ObjectId>;
 }
 
-
 export interface IPopulatedCart extends Omit<ICart, "products"> {
   products: CartProductModule.ITypes.IPopulatedCartProduct[];
 }

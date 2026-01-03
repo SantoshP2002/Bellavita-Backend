@@ -1,4 +1,4 @@
-export * as CType from "./types"
-export * as Models from "./models"
-export * as Controllers from "./controller"
-export * as Routes from "./routes"
+export * as CType from "./types";
+export * as Models from "./models";
+export * as Controllers from "./controller";
+export * as Routes from "./routes";

@@ -21,7 +21,7 @@ export const googleCallback = async (req: Request, res: Response) => {
       return res.redirect(
         `${
           IS_DEV === "true" ? FRONTEND_DEVELOPMENT_URL : FRONTEND_PRODUCTION_URL
-        }/google-auth}`
+        }/test}`
       );
     }
 
@@ -47,14 +47,14 @@ export const googleCallback = async (req: Request, res: Response) => {
     res.redirect(
       `${
         IS_DEV === "true" ? FRONTEND_DEVELOPMENT_URL : FRONTEND_PRODUCTION_URL
-      }/google-auth?token=${token}}`
+      }/test?token=${token}}`
     );
   } catch (error) {
     console.error("Google callback error:", error);
     res.redirect(
       `${
         IS_DEV === "true" ? FRONTEND_DEVELOPMENT_URL : FRONTEND_PRODUCTION_URL
-      }/google-auth}`
+      }/test}`
     );
   }
 };

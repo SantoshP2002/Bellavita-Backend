@@ -2,7 +2,11 @@ import { Request, Response } from "express";
 import { googleAuthClient } from "../../configs/o-auth";
 import { User } from "../user/models";
 import { generateToken } from "./services";
-import { FRONTEND_DEVELOPMENT_URL } from "../../env";
+import {
+  FRONTEND_DEVELOPMENT_URL,
+  FRONTEND_PRODUCTION_URL,
+  IS_DEV,
+} from "../../env";
 
 // GOOGLE REDIRECT
 export const googleRedirect = async (_req: Request, res: Response) => {
@@ -14,7 +18,11 @@ export const googleCallback = async (req: Request, res: Response) => {
     const code = req.query.code as string; // Google se user ka data nikalta hai
     if (!code) {
       console.error("Google callback missing code", req.query);
-      return res.redirect(`${FRONTEND_DEVELOPMENT_URL}/google-auth}`);
+      return res.redirect(
+        `${
+          IS_DEV === "true" ? FRONTEND_DEVELOPMENT_URL : FRONTEND_PRODUCTION_URL
+        }/google-auth}`
+      );
     }
 
     const googleUser = await googleAuthClient.decode(code); // google api call OR User ka data milta hai
@@ -36,9 +44,17 @@ export const googleCallback = async (req: Request, res: Response) => {
     }
 
     const token = generateToken(user._id);
-    res.redirect(`${FRONTEND_DEVELOPMENT_URL}/google-auth?token=${token}}`);
+    res.redirect(
+      `${
+        IS_DEV === "true" ? FRONTEND_DEVELOPMENT_URL : FRONTEND_PRODUCTION_URL
+      }/google-auth?token=${token}}`
+    );
   } catch (error) {
     console.error("Google callback error:", error);
-    res.redirect(`${FRONTEND_DEVELOPMENT_URL}/google-auth}`);
+    res.redirect(
+      `${
+        IS_DEV === "true" ? FRONTEND_DEVELOPMENT_URL : FRONTEND_PRODUCTION_URL
+      }/google-auth}`
+    );
   }
 };

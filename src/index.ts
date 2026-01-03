@@ -1,26 +1,48 @@
-import express from "express";
-import dotenv from "dotenv";
-import connectDB from "./config/db";
-import userRoutes from "./routes/userRoutes";
-import productRoutes from "./routes/productRoutes";
+import "dotenv/config";
+import express, { Request, Response } from "express";
+import QueryString from "qs";
 
-import cors from "cors";
-
-dotenv.config();
+import { NODE_ENV, PORT } from "./env";
+import { router } from "./routes";
+import { connectDB } from "./configs";
+import {
+  CorsMiddleware,
+  DatabaseMiddleware,
+  ResponseMiddleware,
+} from "./middlewares";
 
 const app = express();
+
+const port = PORT || 5000;
+
 app.use(express.json());
-app.use(cors());
-app.use("/api/auth", userRoutes);
-app.use("/api/products", productRoutes);
+app.use(express.urlencoded({ extended: true }));
+app.set("query parser", (str: string) => QueryString.parse(str));
 
-const PORT = process.env.PORT || 3000;
+// Custom Middlewares
+app.use(ResponseMiddleware.success);
+app.use(CorsMiddleware.checkOrigin);
+app.use(DatabaseMiddleware.checkConnection);
 
-app.get("/", (req, res) => {
-  res.send("Belavita setup are Done!");
+app.get("/", (_: Request, res: Response) => {
+  res.success(200, "Welcome to Bellavita API");
 });
 
-app.listen(PORT, async () => {
-  await connectDB();
-  console.log(`Server is running on http://localhost:${PORT}✅`);
-});
+// All API Routes
+app.use("/api", router);
+
+// Error Handling Routes
+app.use(ResponseMiddleware.notFound);
+app.use(ResponseMiddleware.error);
+
+if (NODE_ENV === "development") {
+  app.listen(port, async () => {
+    try {
+      await connectDB();
+      console.log(`Server running on http://localhost:${port}`);
+    } catch (error) {
+      console.error("Server startup failed:", error);
+      process.exit(1);
+    }
+  });
+}

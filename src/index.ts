@@ -2,7 +2,7 @@ import "dotenv/config";
 import express, { Request, Response } from "express";
 import QueryString from "qs";
 
-import { IS_DEV, PORT } from "./env";
+import { PORT } from "./env";
 import { router } from "./routes";
 import { connectDB } from "./configs";
 import {
@@ -35,14 +35,14 @@ app.use("/api", router);
 app.use(ResponseMiddleware.notFound);
 app.use(ResponseMiddleware.error);
 
-if (IS_DEV === "true") {
-  app.listen(port, async () => {
-    try {
-      await connectDB();
-      console.log(`Server running on http://localhost:${port}`);
-    } catch (error) {
-      console.error("Server startup failed:", error);
-      process.exit(1);
-    }
-  });
-}
+app.listen(port, async () => {
+  try {
+    await connectDB();
+    console.log(`Server running on http://localhost:${port}`);
+  } catch (error) {
+    console.error("Server startup failed:", error);
+    process.exit(1);
+  }
+});
+
+export { app };

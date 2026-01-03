@@ -1,3 +1,3 @@
-export * from "./uploadSingleImage"
-export * from "./uploadMultipleImages"
-export * from "./removeSingleImage"
+export * from "./uploadSingleImage";
+export * from "./uploadMultipleImages";
+export * from "./removeSingleImage";

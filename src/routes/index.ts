@@ -6,6 +6,7 @@ import {
   CartModule,
   CartProductModule,
   MediaModule,
+  NewsroomModule,
   OrderModule,
   ProductModule,
   ReviewModule,
@@ -46,8 +47,8 @@ router.use("/media", MediaModule.Routes.router);
 // blog Route
 router.use("/blog", BlogModule.Routes.router);
 
-
-
+// Newsroom Route
+router.use("/newsroom", NewsroomModule.Routes.router);
 
 // GOOGLE ROUTE
 router.get("/google", ResponseMiddleware.catchAsync(googleRedirect));

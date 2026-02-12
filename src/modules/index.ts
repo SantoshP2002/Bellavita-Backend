@@ -8,3 +8,4 @@ export * as OrderModule from "./order";
 export * as ReviewModule from "./review";
 export * as MediaModule from "./media";
 export * as BlogModule from "./blog";
+export * as NewsroomModule from "./newsroom";
